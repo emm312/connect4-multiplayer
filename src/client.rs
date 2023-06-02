@@ -51,7 +51,6 @@ pub async fn start() {
             break;
         }
 
-
         print!("{}", CursorUp(9));
         println!("{board}");
 
