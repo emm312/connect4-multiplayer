@@ -26,11 +26,12 @@ pub async fn start() {
             println!("{} wins!", winner);
             exit(0);
         }
-        print!("Your move: ");
-        let mov = input();
-
+        let mov;
         loop {
-            match mov.parse::<usize>() {
+            print!("Your move: ");
+            let movi = input();
+
+            match movi.parse::<usize>() {
                 Ok(n) => match board.place_obj(State::X, n.clamp(1, 7) - 1) {
                     Ok(()) => (),
                     Err(e) => {
@@ -44,11 +45,13 @@ pub async fn start() {
                     continue;
                 }
             }
+            mov = movi;
             break;
         }
 
         socket.write_u8(mov.parse::<u8>().unwrap().clamp(1, 7)).await.unwrap();
-        print!("{}", CursorUp(9));
+        print!("{}{}", CursorUp(1), EraseLine);
+        print!("{}", CursorUp(8));
         println!("{board}");
         print!("{}", EraseLine);
         let mov = socket.read_u8().await.unwrap();
