@@ -12,7 +12,7 @@ pub async fn start() {
     let mut board = Board::new();
     let mut move_up_num = 0;
 
-    let ip = "10.1.42.113:54389";
+    let ip = "127.0.0.1:54389";
 
     let listener = TcpListener::bind(ip).await.unwrap();
     println!("Waiting for opponent to join...");
@@ -50,6 +50,7 @@ pub async fn start() {
         socket.write_u8(mov.parse::<u8>().unwrap().clamp(1, 7)).await.unwrap();
         print!("{}", CursorUp(9));
         println!("{board}");
+        print!("{}", EraseLine);
         let mov = socket.read_u8().await.unwrap();
         board.place_obj(State::O, mov as usize-1).unwrap();
 

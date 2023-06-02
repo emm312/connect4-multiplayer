@@ -54,7 +54,6 @@ pub async fn start() {
         print!("{}", CursorUp(9));
         println!("{board}");
 
-
         socket.write_u8(mov.parse::<u8>().unwrap().clamp(1, 7)).await.unwrap();
 
 
