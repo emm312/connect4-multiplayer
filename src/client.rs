@@ -33,21 +33,24 @@ pub async fn start() {
         print!("Your move: ");
         let mov = input();
 
-
-        match mov.parse::<usize>() {
-            Ok(n) => match board.place_obj(State::O, n.clamp(1, 7) - 1) {
-                Ok(()) => (),
-                Err(e) => {
-                    println!("{e}");
-                    move_up_num += 1;
+        loop {
+            match mov.parse::<usize>() {
+                Ok(n) => match board.place_obj(State::O, n.clamp(1, 7) - 1) {
+                    Ok(()) => (),
+                    Err(e) => {
+                        println!("{e}");
+                        move_up_num += 1;
+                        continue;
+                    }
+                },
+                Err(_) => {
+                    println!("Enter a valid number.");
                     continue;
                 }
-            },
-            Err(_) => {
-                println!("Enter a valid number.");
-                continue;
             }
+            break;
         }
+
 
         print!("{}", CursorUp(9));
         println!("{board}");
